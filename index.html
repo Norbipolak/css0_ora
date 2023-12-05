@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1. CSS óra</title>
+    <style>
+        * {
+            /*
+                Az összes elemre fog vonatkozni
+                így viszont a címsoroknak nem lesz margin-ja és nem távolodnak el egymástól
+                és ha csinálunk listákat akkor is bejjebb lesznel, túl balra, nem látszanak a pontok 
+                csak a list-style-position: inside-nál 
+            */
+            /*margin: 0;
+            padding: 0;
+            box-sizing: border-box;*/
+        }
+
+        /*
+            a style attributum a tagnél erősebb mint ez, ezért felül fogja írni ezeket a paramétereket
+            amiket megadtunk neki itt 
+        */
+        body {
+            min-height: 5000px;
+        }
+
+        #square {
+            width: 250px;
+            height: 250px;
+            background-color: red;
+        }
+
+        .square {
+            width: 250px;
+            height: 250px;
+            /*
+            Mindig az alsó szabály érvényesül
+            A HTML parser ami be van építve a böngészőbe az fentről lefele olvassa a kódot 
+            és ezért mindig az utolsó/alsó érvényesül 
+
+            akár tudjuk definiálni a .square többször is, nincs értelme, mindig a legalsó szabály érvényesül
+            */
+            width: 300px;
+            height: 300px;
+        }
+
+        .red-bg {
+            background-color: red;
+        }
+
+        .blue-bg {
+            background-color: blue;
+        }
+
+        span {
+            background-color: salmon;
+        }
+
+        #dimension-square {
+            /*
+                Ha van egy szövegünk ami nagyobb mint height 150px akkor kell a min-height, ki fogja tolni a square-t 
+                Ha kisebb a szövegünk mint 150 px akkor marad 150 px
+
+                max-height - nem lehet több mint amit megadtunk 
+            */
+            width: 250px;
+            height: 300px;
+            /*min-height: 150px;*/
+            /*max-height: 200px;*/
+            background-color: goldenrod;
+
+            /*
+            margin -> a többi elemtől való távolság
+            balra lévő elemtől tehát a body-tól eltávolodunk 25px-t, jobbra megyünk 25px-t
+
+            ha mindkét elemnek van margin-ja, akkor az nem adódik össze, az lesz a margin ami a nagyobnak
+            pl. van egy elem felül margin-bottom: 15px;
+            van egy másik elem alul margin-top: 20px;
+            akkor a két elem közti távolság/margin 20px lesz
+            */
+            margin-left: 25px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            margin-right: 25px;
+            /*
+                margin
+                óramutató járása szerint állítja 
+                be a margókat, fentről kezdve
+            */
+            margin: 15px 20px 25px 30px;
+            /*
+                fent, jobbra, lent, balra
+            */
+            margin: 25px 50px 75px;
+            /*
+                felül 25, jobb és bal 50, alul 75
+            */
+            margin: 50px 25px;
+            /*
+                fent-lent 50 
+                jobb-bal 25
+            */
+            margin: 25px;
+            /* mindenhol 25px*/
+            margin: auto;
+            /*horizontálisan középre helyezi az elemet*/
+            margin: 25px auto;
+            /*felül-alul 25px margin, horizontálisan középre van helyezve*/
+
+            /*
+                padding -> belső margó, ugyanugy vagy left, right, top, bottom és ugyanazok a short-cutok mint a marginnál 
+            */
+            padding: 15px;
+            padding-left: 25px;
+
+            /*
+                szegély(border) 
+            */
+            /*szegély szélessége*/
+            border-left-width: 3px;
+            /*szegély stílusa*/
+            border-left-style: dashed;
+            /*szegély színe*/
+            border-left-color: brown;
+
+            border-right: 5px solid maroon;
+
+            border: 5px dotted maroon;
+
+            /*
+                box-sizing 
+                azt mondja meg, hogy az eredeti szélességbe és magasságba 
+                beleszámítson-e a border.
+                eredetileg beleszámít.
+                150*150-es volt a magasság és szélesség de a fenti borderrel és padding-vel 199*203 lett.
+            */
+            box-sizing: border-box;
+            /*
+            ezzel akkor lesz a box amilyen szélességet és magasságot megadtunk neki (ha min-max height-width van akkor nem)
+            margin és a paddinget a belső térből fogja levenni
+            content-box -> alapbeállítés - beleszámít 
+            border-box -> nem számítja hozzá
+            */
+        }
+        /*
+            Ha azt szeretnénk, hogy mind a kettő megkapja ugyanazokat a tulajdonságokat, 
+            akkor egymás mellé írjuk őket vesszővel elválasztva
+        */
+        .square1, .square2 {
+            width: 230px;
+            height: 230px;
+        }
+        .square2 {
+            border: 1px solid grey;
+        }
+        .square1 {
+            background-color: purple;
+        }
+        /*.square2 {
+            width: 230px;
+            height: 230px;
+        }*/
+        /*ezek a tulajdonságok azok csak arra az elemre fognak vonatkozni, aminek mindkét class-je meg van class1 és class2 is*/
+        .class1.class2 {
+            padding: 15px;
+            background-color: indianred;
+        }
+        .class3 .class4 {
+            /*arra fog vonatkozni ha van a class3-ban egy class4 nevezetű elem is, beágyazott elem*/ 
+        }
+        p {
+            /*szöveg színe*/
+            color: grey;
+            /*szöveg elrendezése horizontálisan*/
+            text-align: center; /*center(középre), right, left(alapértelmezett), justify(sorkizárt) -> teljesen faltól falig*/
+            /*sorok közötti távolság*/
+            line-height: 25px; /*a sor közepétől méri, tehát 12,5 12,5px távolság van a sortól lefele és felfele is*/
+
+        /*első sor behuzása paragrafusonként*/
+        text-indent: 15px;
+        }
+        .word-spacing {
+            /*szavak közötti távolságot jelenti*/
+            word-spacing: 15px;
+        }
+        .letter-spacing {
+            /*betűk közötti távolságot jelenti*/
+            letter-spacing: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Mi az a CSS és mire használjuk?</h1>
+    <p>
+        A CSS (Cascading Style Sheets) egy leírónyelv. A weboldalak stíluskészletét
+        határozza meg tehát azt, hogy az egyes elemek hogyan nézzenek ki a weblapon. <br>
+
+        A div az alapértelmezetten 100% széles és 0 px magas bekezdés szintű elem
+        aminek nincsen margója. <br>
+
+        Az ID egy attributum, mint a képeknél az src vagy a linkeknél a href
+        <br>
+        Style 3 féle helyen lehet inline, .css vagy itt bárhol egy style tagben
+    </p>
+
+    <h2>Szelektorok (az elemek kijelőlésre szolgálnak)</h2>
+    <h3>ID (azonosító)</h3>
+    <p>
+        Az ID egy egyedi azonosító. Egy tagnek csak egy id-ja lehet,
+        egy id-t csak egyetlen tag kaphat meg.
+    </p>
+    <div id="square"></div>
+
+    <h3>Class (osztályba sorolás)</h3>
+    <p>
+        A class az osztályba sorolást jelenti. Egy tag-et lehet több osztályba sorolni is,
+        és egy tag kaphat több osztályt is.
+
+        <br> Ha több class-t szeretnénk megadni egy tag-nek, akkor az lehetséges de viszont <br>
+        szóközzel elválasztva. pl.: class="square blue-bg" vagy class="square red-bg"
+    </p>
+    <div class="square red-bg"></div>
+    <div class="square blue-bg"></div>
+
+    <h3>Tagnév</h3>
+    <span>1</span>
+    <span>2</span>
+    <span>3</span>
+
+    <h1>Alapvető dimenziók</h1>
+    <div id="dimension-square" style="margin-bottom: 50px;background-color: blue;">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Doloremque in quidem nobis minus, odio eius temporibus neque
+        ratione deserunt perferendis expedita, labore fugiat at hic?
+    </div>
+
+    <div id="dimension-square">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Doloremque in quidem nobis minus, odio eius temporibus neque
+        ratione deserunt perferendis expedita, labore fugiat at hic?
+    </div>
+
+    <ul>
+        <li>asfsdg</li>
+        <li>fgnsrtnf</li>
+        <li>snsrng</li>
+    </ul>
+
+        <h1>Speciális kijelőlések</h1>
+        <div class="square1"></div>
+        <div class="square2"></div>
+
+        <div class="class1 class2"></div>
+        <div class="class1"></div>
+
+        <h1>Szövegrendezés</h1>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque commodi dolorem quos rem mollitia fugiat! Voluptatibus,
+             ea quod labore, blanditiis, nisi autem quibusdam magnam reiciendis dolorum nihil adipisci architecto! Incidunt, quidem 
+             facere! Itaque quidem iusto ullam cum eius ipsam, ratione reiciendis quia aspernatur rerum obcaecati libero voluptates
+              rem necessitatibus doloremque!
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque commodi dolorem quos rem mollitia fugiat! Voluptatibus,
+             ea quod labore, blanditiis, nisi autem quibusdam magnam reiciendis dolorum nihil adipisci architecto! Incidunt, quidem 
+             facere! Itaque quidem iusto ullam cum eius ipsam, ratione reiciendis quia aspernatur rerum obcaecati libero voluptates
+              rem necessitatibus doloremque!
+        </p>
+        <div class="word-spacing">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque commodi dolorem quos rem mollitia fugiat! Voluptatibus,
+             ea quod labore, blanditiis, nisi autem quibusdam magnam reiciendis dolorum nihil adipisci architecto! Incidunt, quidem 
+             facere! Itaque quidem iusto ullam cum eius ipsam, ratione reiciendis quia aspernatur rerum obcaecati libero voluptates
+              rem necessitatibus doloremque!
+        </div>
+        <div class="letter-spacing">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque commodi dolorem quos rem mollitia fugiat! Voluptatibus,
+             ea quod labore, blanditiis, nisi autem quibusdam magnam reiciendis dolorum nihil adipisci architecto! Incidunt, quidem 
+             facere! Itaque quidem iusto ullam cum eius ipsam, ratione reiciendis quia aspernatur rerum obcaecati libero voluptates
+              rem necessitatibus doloremque!
+        </div>
+    
+</body>
+
+</html>
